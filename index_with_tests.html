@@ -42,6 +42,11 @@
 						Decode ⇩
 					</button>
 				</div>
+				<div class="col">
+					<button type="submit" id="test">
+						test
+					</button>
+				</div>
 				</div>
 			</div>
 			<div class="row">
@@ -88,8 +93,28 @@
 			return retStr;
 		};
 
-		//function for some tests
+		//block of tests
+		function getDifference(a, b) {
+			var i = 0;
+			var j = 0;
+			var result = "";
+
+			while (j < b.length){
+				if (a[i] != b[j] || i == a.length){
+					result += b[j];
+				} else {
+					i++;
+					j++;
+				};
+			return result;
+			};
+		}
 		
+		var testString = "ibox://payment?email=moon1%40agent.demo&password=123123123&amount=150&description=test%20description&receiptEmail=r.hasianov%40smart-fin.ru&receiptPhone=&caller=integrationExample%3A%2F%2Fpayment&Purchases=%7B%0D%0A%20%20%22Purchases%22%3A%20%5B%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22TaxCode%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%22VAT1800%22%0D%0A%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%22Title%22%3A%20%22%D0%9F%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F%201%22%2C%0D%0A%20%20%20%20%20%20%22Quantity%22%3A%202%2C%0D%0A%20%20%20%20%20%20%22Price%22%3A%20150.25%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22TaxCode%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%22Title%22%3A%20%22%D0%9F%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F%202%22%2C%0D%0A%20%20%20%20%20%20%22Quantity%22%3A%201%2C%0D%0A%20%20%20%20%20%20%22Price%22%3A%20100%0D%0A%20%20%20%20%7D%0D%0A%20%20%5D%0D%0A%7D";
+		
+		var res =  getDifference(document.getElementById("dec").value, testString);
+		
+		document.getElementById("test").onclick = function(){console.log(res)}
 		
 	</script>
 </html>
