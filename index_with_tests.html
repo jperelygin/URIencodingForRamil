@@ -87,9 +87,14 @@
 		};
 		
 		function encode(text){
+			
 			var backslash = "/";
 			var backslash_replace = new RegExp(backslash, 'g');
-			var retStr = encodeURI(text).replace(/@/g, "%40").replace(/:/g, "%3A").replace(backslash_replace,"%2F").replace(/,/g,"%2C");
+			
+			var retStr = encodeURI(text.substring(7)).replace(/@/g, "%40").replace(/:/g, "%3A").replace(backslash_replace,"%2F").replace(/,/g,"%2C");
+
+			retStr = retStr.replace(/%0A/g,"%0D%0A");
+			retStr = "ibox://" + retStr;
 			return retStr;
 		};
 
@@ -110,11 +115,32 @@
 			};
 		}
 		
+		function stringDiff(encoded, sample) {
+			var dict = {};
+			
+			for (i=0; i<encoded.length; i++){
+				if (encoded[i] != sample[i]){
+					dict.str(i) = sample[i];
+					console.log("encoded: " + encoded[i] + "\n sample: " + sample[i]);
+				}
+			};
+			
+			var str = "";
+			for (var key in dict){
+				var value = dict[key];
+				str += value + " - " + key + "\n";
+			};
+			return str;
+		}
+		
 		var testString = "ibox://payment?email=moon1%40agent.demo&password=123123123&amount=150&description=test%20description&receiptEmail=r.hasianov%40smart-fin.ru&receiptPhone=&caller=integrationExample%3A%2F%2Fpayment&Purchases=%7B%0D%0A%20%20%22Purchases%22%3A%20%5B%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22TaxCode%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%22VAT1800%22%0D%0A%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%22Title%22%3A%20%22%D0%9F%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F%201%22%2C%0D%0A%20%20%20%20%20%20%22Quantity%22%3A%202%2C%0D%0A%20%20%20%20%20%20%22Price%22%3A%20150.25%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22TaxCode%22%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%0D%0A%20%20%20%20%20%20%5D%2C%0D%0A%20%20%20%20%20%20%22Title%22%3A%20%22%D0%9F%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D1%8F%202%22%2C%0D%0A%20%20%20%20%20%20%22Quantity%22%3A%201%2C%0D%0A%20%20%20%20%20%20%22Price%22%3A%20100%0D%0A%20%20%20%20%7D%0D%0A%20%20%5D%0D%0A%7D";
 		
-		var res =  getDifference(document.getElementById("dec").value, testString);
+		var res =  stringDiff(document.getElementById("enc").value, testString);
 		
-		document.getElementById("test").onclick = function(){console.log(res)}
+		document.getElementById("test").onclick = function(){
+			document.getElementById("dec").value = res
+		};
+				
 		
 	</script>
 </html>
