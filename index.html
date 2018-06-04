@@ -84,7 +84,7 @@
 		function encode(text){
 			var backslash = "/";
 			var backslash_replace = new RegExp(backslash, 'g');
-			var retStr = encodeURI(text.substring(7)).replace(/@/g, "%40").replace(/:/g, "%3A").replace(backslash_replace,"%2F").replace(/,/g,"%2C");
+			var retStr = encodeURI(text.substring(7)).replace(/@/g, "%40").replace(/:/g, "%3A").replace(backslash_replace,"%2F").replace(/,/g,"%2C").replace(/+/g, "%2B");
 			retStr = retStr.replace(/%0A/g,"%0D%0A");
 			retStr = "ibox://" + retStr;
 			return retStr;
